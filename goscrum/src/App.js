@@ -1,0 +1,80 @@
+import Login from "./Views/Login";
+import Tasks from "./Views/Tasks";
+import Error404 from "./Views/Error404";
+
+import { Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+
+import { AnimatePresence, motion } from "framer-motion";
+
+const RequireAuth = ({ children }) => {
+  if (!localStorage.getItem("logged")) {
+    return <Navigate to="/login" replace={true} />;
+  }
+  return children;
+};
+
+const pageTransition = {
+  in: {
+    opacity: 1,
+  },
+  off: {
+    opacity: 0,
+  },
+};
+
+function App() {
+  return (
+    <AnimatePresence>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <RequireAuth>
+              <motion.div
+                className="page"
+                initial="out"
+                animate="in"
+                exit="out"
+                variants={pageTransition}
+              >
+                <Tasks />
+              </motion.div>
+            </RequireAuth>
+          }
+        />
+        <Route
+          index
+          path="/login"
+          element={
+            <motion.div
+              className="page"
+              initial="out"
+              animate="in"
+              exit="out"
+              variants={pageTransition}
+            >
+              <Login />
+            </motion.div>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <motion.div
+              className="page"
+              initial="out"
+              animate="in"
+              exit="out"
+              variants={pageTransition}
+            >
+              <Error404 />
+            </motion.div>
+          }
+        />
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
+export default App;
