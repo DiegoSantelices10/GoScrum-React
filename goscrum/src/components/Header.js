@@ -12,9 +12,9 @@ const handleLogout = () => {
 }
 
   return (
-    <header className="flex justify-between items-center">
-        <title>GO SCRUM</title>
-        <div onClick={handleLogout}>X</div>
+    <header className="flex justify-between items-center p-3 bg-light shadow h-16">
+        <h1>GO SCRUM</h1>
+        <div className="hover:bg-black hover:text-white transition-all" onClick={handleLogout}>X</div>
     </header>
   )
 }

@@ -1,7 +1,11 @@
 import React from 'react'
+import Header from '../components/Header'
 
 export default function Error404() {
   return (
-    <div>Error404</div>
+    <div>
+      <Header/>
+      <div>Error 404</div>
+    </div>
   )
 }

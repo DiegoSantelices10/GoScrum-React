@@ -1,6 +1,7 @@
 import Login from "./Views/Login";
 import Tasks from "./Views/Tasks";
 import Error404 from "./Views/Error404";
+import Register from './Views/Register'
 
 import { Navigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
@@ -55,6 +56,21 @@ function App() {
               variants={pageTransition}
             >
               <Login />
+            </motion.div>
+          }
+        />
+         <Route
+          index
+          path="/register"
+          element={
+            <motion.div
+              className="page"
+              initial="out"
+              animate="in"
+              exit="out"
+              variants={pageTransition}
+            >
+              <Register />
             </motion.div>
           }
         />
