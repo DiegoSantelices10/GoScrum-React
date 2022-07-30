@@ -2,17 +2,19 @@ import React from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup';
 import { v4 as uuidv4 } from 'uuid'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FormControlLabel, Switch } from '@mui/material'
-import axios from 'axios'
+
+
 
 export default function Register() {
+  const navigate = useNavigate()
   const required = "*Campo obligatorio"
-
+  const { REACT_APP_API_ENDPOINT } = process.env
   const onSubmit = async () => {
     const teamID = !values.teamID ? uuidv4() : values.teamID
 
-    await fetch('https://goscrum-api.alkemy.org/auth/register', {
+    await fetch(`${REACT_APP_API_ENDPOINT}auth/register`, {
       method: "POST",
       headers: {
         "Content-Type" : "application/json"
@@ -30,7 +32,10 @@ export default function Register() {
       })
     })
     .then(response => response.json())
-    .then(data => console.log(data)) 
+    .then(data => { 
+      console.log(data?.result?.user?.teamID)
+      navigate("/registered/" + data?.result?.user?.teamID, {replace: true})  
+    }) 
 }
 
 

@@ -2,6 +2,7 @@ import Login from "./Views/Login";
 import Tasks from "./Views/Tasks";
 import Error404 from "./Views/Error404";
 import Register from './Views/Register'
+import Registered from './Views/Registrered'
 
 import { Navigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
@@ -13,15 +14,11 @@ const RequireAuth = ({ children }) => {
     return <Navigate to="/login" replace={true} />;
   }
   return children;
-};
+}
 
 const pageTransition = {
-  in: {
-    opacity: 1,
-  },
-  off: {
-    opacity: 0,
-  },
+  in: { opacity: 1 },
+  out:{ opacity: 0 },
 };
 
 function App() {
@@ -59,6 +56,20 @@ function App() {
             </motion.div>
           }
         />
+        <Route
+          path="/registered/:teamID"
+          element={
+            <motion.div
+              className="page"
+              initial="out"
+              animate="in"
+              exit="out"
+              variants={pageTransition}
+            >
+              <Registered />
+            </motion.div>
+          }
+          />
          <Route
           index
           path="/register"

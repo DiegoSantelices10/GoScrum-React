@@ -4,26 +4,28 @@ import Header from '../components/Header'
 import { cardsData } from '../data/data'
 import Card from '../components/Card'
 import TaskForm from '../components/TaskForm'
+import { ToastContainer, toast } from "react-toastify"
+
 
 export default function Tasks() {
 
   const { isPhone } = useResize()
 
-  const limitString = str => {
-    if (str.length > 170)
-      return { string: str.slice(0, 167).concat("..."), addButton: true }
-    return { string: str, addButton: false }
-  }
+
   const renderAllCards = () => {
     return cardsData.map(data => <Card key={data.id} data={data}></Card>)
   }
 
   return (
-    <div className='bg-gray-100 flex flex-col h-full'>
+    <div className='bg-gray-100 flex flex-col h-screen'>
       <Header />
       <main className='flex items-center h-full'>
-            <TaskForm />
-        <section className="container mx-auto w-3/5 h-full ">
+      <ToastContainer />
+        <section className="w-1/3">
+        <TaskForm />
+        </section>
+            
+        <section className="container mx-auto w-2/3 h-full ">
           <div>
             <h2 className='font-bold text-2xl'>Mis Tareas</h2>
           </div>

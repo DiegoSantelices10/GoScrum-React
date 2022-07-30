@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup';
-
+import { toast } from "react-toastify"
 export default function TaskForm() {
 
   let   validationSchema = yup.object().shape({
@@ -27,8 +27,8 @@ export default function TaskForm() {
   validationSchema
   })
   return (
- <div className="h-full">
-    <div className="px-8 py-6 mt-4 text-left bg-white shadow-lg">
+ <div className="h-full flex justify-center items-center">
+    <div className="px-8 py-6 text-left bg-white shadow-lg">
         <h3 className="text-2xl font-bold text-center">Crea Una Tarea</h3>
         <form onSubmit={handleSubmit}>
             <div className="mt-4 w-80">
