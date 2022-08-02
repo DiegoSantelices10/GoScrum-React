@@ -5,8 +5,8 @@ export const cardsData = [
         datetime: "10/05/1988 17:50hs",
         creator: "Diego Santelices",
         description: "Desc 1",
-        type: "new",
-        priority: "high"
+        type: "NEW",
+        priority: "HIGH"
     },
     {
         id: 2,
@@ -14,8 +14,8 @@ export const cardsData = [
         datetime: "10/05/1988 17:50hs",
         creator: "Diego Santelices",
         description: "Desc 2",
-        type: "new",
-        priority: "high"
+        type: "FINISHED",
+        priority: "LOW"
     },
     {
         id: 3,
@@ -23,8 +23,8 @@ export const cardsData = [
         datetime: "10/05/1988 17:50hs",
         creator: "Diego Santelices",
         description: "Desc 3",
-        type: "new",
-        priority: "high"
+        type: "PROCESS",
+        priority: "MEDIUM"
     },
     {
         id: 4,

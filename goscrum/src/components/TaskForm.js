@@ -1,37 +1,76 @@
-import React from 'react'
+import { React, useState, useEffect } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup';
 import { toast } from "react-toastify"
+
+
+
+
 export default function TaskForm() {
 
-  let   validationSchema = yup.object().shape({
+const { REACT_APP_API_ENDPOINT } = process.env
+const required = "*Campo requerido"
+
+const [data, setData] = useState()
+
+useEffect(() => {
+ fetch(`${REACT_APP_API_ENDPOINT}task/data`, {
+    method: "GET",
+    headers: {
+      "Content-Type" : "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token")
+    },
+    body: JSON.stringify()
+  })
+  .then(response => response.json())
+  .then(data => { setData(data.result) })
+})
+
+
+
+  let validationSchema = yup.object().shape({
     title: yup.string()
               .min(6, "la cantidad minima de caracteres es 6")
               .required(),
-    status: yup.string().required(),
-    priority: yup.string().required()
+    status: yup.string().required(required),
+    description: yup.string().required(required),
+    importance: yup.string().required(required)
   });
-  const {handleSubmit, handleChange, values, errors, touched, handleBlur} = useFormik({
+
+
+  const {handleSubmit, handleChange, values, errors, touched, handleBlur, resetForm} = useFormik({
     initialValues: {
       title: "",
       status: "",
-      priority: "",
+      importance: "",
       description: "",
 
     },
-    
     onSubmit: async function (values) {
-     alert()
+      await fetch(`${REACT_APP_API_ENDPOINT}task`, {
+        method: "POST",
+        headers: {
+          "Content-Type" : "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token")
+        },
+        body: JSON.stringify({ task: values })
+      })
+      .then(response => response.json())
+      .then(data => { 
+        console.log(data)
+        resetForm()
+       alert("la tarea se creo")
+      })
   },
-
   validationSchema
   })
+
+
   return (
- <div className="h-full flex justify-center items-center">
-    <div className="px-8 py-6 text-left bg-white shadow-lg">
-        <h3 className="text-2xl font-bold text-center">Crea Una Tarea</h3>
-        <form onSubmit={handleSubmit}>
-            <div className="mt-4 w-80">
+ <div className="w-full flex justify-center">
+    <div className="w-3/4 md:px-2 md:py-2 text-left md:bg-white md:shadow-lg">
+        <form onSubmit={handleSubmit} >
+            <div className="mt-4 w-4/5 mx-auto">
                     <div >
                         <label className="block">Title</label>
                             <input id="title"
@@ -50,29 +89,27 @@ export default function TaskForm() {
                                    onChange={handleChange}
                                    value={values.status}
                                   className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
-                                  <option value="nuevo">Nuevo</option>
-                                  <option value="proceso">En Proceso</option>
-                                  <option value="finalizada">Finalizada</option>
+                                  <option value="">Selecciona un estado</option>
+                                  {data?.status?.map( option =>  ( <option id={option} value={option}> {option} </option> ) )}
                                 </select>
                                 {errors.status && touched.status && <span>{errors.status}</span>}
                     </div>
                     <div className="mt-4">
-                    <label className="block">Priority</label>
-                            <select id="priority"
+                    <label className="block">Importance</label>
+                            <select id="importance"
                                    onBlur={handleBlur}
                                    onChange={handleChange}
-                                   value={values.priority}
-                                  className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
-                                  <option value="alta">Alta</option>
-                                  <option value="media">Media</option>
-                                  <option value="baja">Baja</option>
+                                   value={values.importance}
+                                  className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">                                  
+                                 <option value="">Selecciona un estado</option>
+                                 {data?.importance?.map( option =>  ( <option id={option} value={option}> {option} </option> ) )}
                                 </select>
-                                {errors.priority && touched.priority && <span>{errors.priority}</span>}
+                                {errors.importance && touched.importance && <span>{errors.importance}</span>}
                     </div>
                 <div className="mt-4">
                     <label className="block">Description</label>
-                            <input id="description"
-                                   type="textarea" 
+                            <textarea id="description"
+                                      type="text"
                                    onChange={handleChange}
                                    value={values.description}
                                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"/>

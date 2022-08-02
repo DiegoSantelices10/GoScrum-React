@@ -2,14 +2,17 @@ import React from "react";
 
 export default function Card({data: {title, datetime, creator, description, type, priority}}) {
   return (
-    <div className="relative">
-      <div className="absolute right-1">X</div>
-      <h3>{title}</h3>
-      <h6>{datetime}</h6>
-      <h5>{creator}</h5>
-      <button>{type}</button>
-      <button>{priority}</button>
-      <p>{description}</p>
+    <div className="relative w-full md:w-72 mx-auto my-5 ">
+    <div className="bg-white p-3 rounded-md shadow-md border text-sm">
+      <div className="absolute right-3">X</div>
+      <h3 className="text-base font-bold">{title}</h3>
+      <h5 className="font-semibold">{creator}</h5>
+      <h6 className="font-medium mb-2">{datetime}</h6>
+      <button className="bg-red-500 text-xs font-semibold text-white p-1 w-20 rounded  hover:bg-red-400 transition-colors">{type}</button>
+      <button className="bg-red-500 text-xs font-semibold text-white p-1 w-20 rounded ml-1 hover:bg-red-400 transition-colors">{priority}</button>
+      <p className="font-medium">{description}</p>
     </div>
+  </div>
   );
 }
+

@@ -10,7 +10,7 @@ import { Routes, Route } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
 const RequireAuth = ({ children }) => {
-  if (!localStorage.getItem("logged")) {
+  if (!localStorage.getItem("token")) {
     return <Navigate to="/login" replace={true} />;
   }
   return children;

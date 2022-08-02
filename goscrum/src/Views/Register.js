@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup';
 import { v4 as uuidv4 } from 'uuid'
@@ -8,36 +8,22 @@ import { FormControlLabel, Switch } from '@mui/material'
 
 
 export default function Register() {
+
+  const [data, setData] = useState("")
+
   const navigate = useNavigate()
   const required = "*Campo obligatorio"
   const { REACT_APP_API_ENDPOINT } = process.env
-  const onSubmit = async () => {
-    const teamID = !values.teamID ? uuidv4() : values.teamID
 
-    await fetch(`${REACT_APP_API_ENDPOINT}auth/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type" : "application/json"
-      },
-      body: JSON.stringify({
-        user: {
-          userName: values.userName,
-          password: values.password,
-          email: values.email,
-          teamID,
-          role: values.role,
-          continent: values.continent,
-          region: values.region
-        }
-      })
-    })
-    .then(response => response.json())
-    .then(data => { 
-      console.log(data?.result?.user?.teamID)
-      navigate("/registered/" + data?.result?.user?.teamID, {replace: true})  
-    }) 
-}
+  useEffect(() => {
+  fetch(`${REACT_APP_API_ENDPOINT}auth/data`)
+          .then(response => response.json())
+          .then(data => { setData(data.result)}) 
 
+
+  }, [])
+
+ 
 
   let validationSchema = yup.object().shape({
     userName: yup.string().min(6, "la cantidad minima de caracteres es 6").required(required),
@@ -64,7 +50,35 @@ export default function Register() {
       continent: "",
       region: "",
       switch: false,
-    }, validationSchema, onSubmit
+    }, validationSchema, 
+
+    onSubmit: async () => {
+      const teamID = !values.teamID ? uuidv4() : values.teamID
+  
+      await fetch(`${REACT_APP_API_ENDPOINT}auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({
+          user: {
+            userName: values.userName,
+            password: values.password,
+            email: values.email,
+            teamID,
+            role: values.role,
+            continent: values.continent,
+            region: values.region
+          }
+        })
+      })
+      .then(response => response.json())
+      .then(data => { 
+        console.log(data?.result?.user?.teamID)
+        navigate("/registered/" + data?.result?.user?.teamID, {replace: true})  
+      }) 
+  }
+
   })
 
 
@@ -133,11 +147,13 @@ export default function Register() {
                 value={values.role}
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
                 <option value="">Selecciona un Rol</option>
-                <option value="Team Member">Team Member</option>
-                <option value="Team Leader">Team Leader</option>
+                {data?.Rol?.map( option =>  (<option id={option} value={option}> {option} </option>) )}
               </select>
               {errors.role && touched.role && <span>{errors.role}</span>}
             </div>
+ 
+
+
             <div className="mt-4">
               <label className="block">Continente</label>
               <select id="continent"
@@ -146,9 +162,8 @@ export default function Register() {
                 value={values.continent}
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
                 <option value="">Selecciona un Continente</option>
-                <option value="America">America</option>
-                <option value="Europa">Europa</option>
-                <option value="Otro">Otro</option>
+                {data?.continente?.map( option =>  ( <option id={option} value={option}> {option} </option> ) )}
+               
               </select>
               {errors.continent && touched.continent && <span>{errors.continent}</span>}
             </div>
@@ -161,11 +176,7 @@ export default function Register() {
                   value={values.region}
                   className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
                   <option value="">Selecciona una Region</option>
-                  <option value="Latam">Latam</option>
-                  <option value="Brazil">Brasil</option>
-                  <option value="America del Norte">America del Norte</option>
-                  <option value="Otro">Otro</option>
-
+                {data?.region?.map( option =>  ( <option id={option} value={option}> {option} </option> ) )}
                 </select>
                 {errors.region && touched.region && <span>{errors.region}</span>}
               </div>

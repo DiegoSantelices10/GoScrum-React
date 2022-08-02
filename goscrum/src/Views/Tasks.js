@@ -17,55 +17,58 @@ export default function Tasks() {
   }
 
   return (
-    <div className='bg-gray-100 flex flex-col h-screen'>
+    <div className='flex flex-col h-screen bg-slate-100'>
       <Header />
-      <main className='flex items-center h-full'>
-      <ToastContainer />
-        <section className="w-1/3">
-        <TaskForm />
+      <main className='md:flex h-full'>
+        <ToastContainer />
+        <section className="md:w-2/6">
+        <div>
+            <h2 className='font-bold text-2xl text-center'>Crea una Tarea</h2>
+          </div>
+          <TaskForm />
         </section>
-            
-        <section className="container mx-auto w-2/3 h-full ">
+
+        <section className="container mx-auto md:w-4/6 h-full ">
           <div>
-            <h2 className='font-bold text-2xl'>Mis Tareas</h2>
+            <h2 className='font-bold text-2xl text-center'>Mis Tareas</h2>
           </div>
           <div>
             {isPhone ? renderAllCards() : (
-              <div className="flex justify-between items-center">
-                <div className="relative w-72 ">
+              <div className="flex justify-around ">
+                <div className="relative w-60">
                   <h1 className=" font-semibold">Nuevas</h1>
-                  <div className="bg-white p-1 rounded shadow-lg border">
-                    <div className="absolute right-1">X</div>
-                    <h3>Tarea 1</h3>
-                    <h6>10/05/88 10:34hs</h6>
-                    <h5>Diego Santelices</h5>
-                    <button className="bg-red-500 text-white p-1 w-24 rounded  hover:bg-red-400 transition-colors">Nuevo</button>
-                    <button className="bg-red-500 text-white p-1 w-24 rounded ml-1 hover:bg-red-400 transition-colors">Alta</button>
-                    <p>Description fake</p>
+                  <div className="bg-white p-3 rounded-md shadow-md border text-sm">
+                    <div className="absolute right-3">X</div>
+                    <h3 className="text-base font-bold">Tarea 1</h3>
+                    <h5 className="font-semibold">Diego Santelices</h5>
+                    <h6 className="font-medium mb-2">10/05/88  15:34hs.</h6>
+                    <button className="bg-red-500 text-xs font-semibold text-white p-1 w-20 rounded  hover:bg-red-400 transition-colors">NEW</button>
+                    <button className="bg-red-500 text-xs font-semibold text-white p-1 w-20 rounded ml-1 hover:bg-red-400 transition-colors">LOW</button>
+                    <p className="font-normal">esto es una descripcion de prueba para el proyecto de ateras de alkemy challenge</p>
                   </div>
                 </div>
-                <div className="relative w-72 ">
+                <div className="relative w-60">
                   <h1 className=" font-semibold">En proceso</h1>
-                  <div className="bg-white p-1 rounded shadow-lg border">
-                    <div className="absolute right-1">X</div>
-                    <h3>Tarea 1</h3>
-                    <h6>12/04/88 13:30hs.</h6>
-                    <h5>Diego Santelices</h5>
-                    <button className="bg-red-500 text-white p-1 w-24 rounded  hover:bg-red-400 transition-colors">En proceso</button>
-                    <button className="bg-red-500 text-white p-1 w-24 rounded ml-1 hover:bg-red-400 transition-colors">Media</button>
-                    <p>description fake</p>
+                  <div className="bg-white p-3 rounded-md shadow-md border text-sm">
+                    <div className="absolute right-3">X</div>
+                    <h3 className="text-base font-bold">Tarea 1</h3>
+                    <h5 className="font-semibold">Diego espero</h5>
+                    <h6 className="font-medium mb-2">10/05/88  15:34hs.</h6>
+                    <button className="bg-red-500 text-xs font-semibold text-white p-1 w-20 rounded  hover:bg-red-400 transition-colors">PROCESS</button>
+                    <button className="bg-red-500 text-xs font-semibold text-white p-1 w-20 rounded ml-1 hover:bg-red-400 transition-colors">MEDIUM</button>
+                    <p className="font-normal">esto es una descripcion de prueba para el proyecto de ateras de alkemy challenge</p>
                   </div>
                 </div>
-                <div className="relative w-72 ">
+                <div className="relative w-60">
                   <h1 className=" font-semibold">Finalizadas</h1>
-                  <div className="bg-white p-1 rounded shadow-lg border">
-                    <div className="absolute right-1">X</div>
-                    <h3>Tarea 1</h3>
-                    <h6>20/03/21 21:30hs.</h6>
-                    <h5>Diego Santelices</h5>
-                    <button className="bg-red-500 text-white p-1 w-24 rounded  hover:bg-red-400 transition-colors">Finalizada</button>
-                    <button className="bg-red-500 text-white p-1 w-24 rounded ml-1 hover:bg-red-400 transition-colors">Baja</button>
-                    <p>description fake</p>
+                  <div className="bg-white p-3 rounded-md shadow-md border text-sm">
+                    <div className="absolute right-3">X</div>
+                    <h3 className="text-base font-bold">Tarea 1</h3>
+                    <h5 className="font-semibold">Diego Santelices</h5>
+                    <h6 className="font-medium mb-2">10/05/88  15:34hs.</h6>
+                    <button className="bg-red-500 text-xs font-semibold text-white p-1 w-20 rounded  hover:bg-red-400 transition-colors">FINISHED</button>
+                    <button className="bg-red-500 text-xs font-semibold text-white p-1 w-20 rounded ml-1 hover:bg-red-400 transition-colors">HIGH</button>
+                    <p className="font-normal">esto es una descripcion de prueba para el proyecto de ateras de alkemy challenge</p>
                   </div>
                 </div>
               </div>
