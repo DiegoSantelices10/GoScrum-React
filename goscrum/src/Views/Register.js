@@ -13,10 +13,10 @@ export default function Register() {
 
   const navigate = useNavigate()
   const required = "*Campo obligatorio"
-  const { REACT_APP_API_ENDPOINT } = process.env
+  const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env
 
-  useEffect(() => {
-  fetch(`${REACT_APP_API_ENDPOINT}auth/data`)
+  useEffect( async () => {
+  await fetch(`${API_ENDPOINT}auth/data`)
           .then(response => response.json())
           .then(data => { setData(data.result)}) 
 
@@ -55,7 +55,7 @@ export default function Register() {
     onSubmit: async () => {
       const teamID = !values.teamID ? uuidv4() : values.teamID
   
-      await fetch(`${REACT_APP_API_ENDPOINT}auth/register`, {
+      await fetch(`${API_ENDPOINT}auth/register`, {
         method: "POST",
         headers: {
           "Content-Type" : "application/json"
@@ -162,7 +162,7 @@ export default function Register() {
                 value={values.continent}
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
                 <option value="">Selecciona un Continente</option>
-                {data?.continente?.map( option =>  ( <option id={option} value={option}> {option} </option> ) )}
+                {data?.continente?.map( option =>  ( <option id={option} > {option} </option> ) )}
                
               </select>
               {errors.continent && touched.continent && <span>{errors.continent}</span>}
@@ -176,7 +176,7 @@ export default function Register() {
                   value={values.region}
                   className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
                   <option value="">Selecciona una Region</option>
-                {data?.region?.map( option =>  ( <option id={option} value={option}> {option} </option> ) )}
+                {data?.region?.map( option =>  ( <option id={option}> {option} </option> ) )}
                 </select>
                 {errors.region && touched.region && <span>{errors.region}</span>}
               </div>

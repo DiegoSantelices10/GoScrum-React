@@ -8,13 +8,13 @@ import { toast } from "react-toastify"
 
 export default function TaskForm() {
 
-const { REACT_APP_API_ENDPOINT } = process.env
+const { REACT_APP_API_ENDPOINT: API_ENDPOINT  } = process.env
 const required = "*Campo requerido"
 
 const [data, setData] = useState()
 
-useEffect(() => {
- fetch(`${REACT_APP_API_ENDPOINT}task/data`, {
+useEffect( () => {
+ fetch(`${API_ENDPOINT}task/data`, {
     method: "GET",
     headers: {
       "Content-Type" : "application/json",
@@ -47,7 +47,7 @@ useEffect(() => {
 
     },
     onSubmit: async function (values) {
-      await fetch(`${REACT_APP_API_ENDPOINT}task`, {
+      await fetch(`${API_ENDPOINT}task`, {
         method: "POST",
         headers: {
           "Content-Type" : "application/json",
@@ -90,7 +90,7 @@ useEffect(() => {
                                    value={values.status}
                                   className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
                                   <option value="">Selecciona un estado</option>
-                                  {data?.status?.map( option =>  ( <option id={option} value={option}> {option} </option> ) )}
+                                  {data?.status?.map( option =>  ( <option id={option} key={option}> {option} </option> ) )}
                                 </select>
                                 {errors.status && touched.status && <span>{errors.status}</span>}
                     </div>
@@ -102,7 +102,7 @@ useEffect(() => {
                                    value={values.importance}
                                   className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">                                  
                                  <option value="">Selecciona un estado</option>
-                                 {data?.importance?.map( option =>  ( <option id={option} value={option}> {option} </option> ) )}
+                                 {data?.importance?.map( option =>  ( <option id={option} key={option}> {option} </option> ) )}
                                 </select>
                                 {errors.importance && touched.importance && <span>{errors.importance}</span>}
                     </div>
