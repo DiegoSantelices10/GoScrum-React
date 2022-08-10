@@ -1,5 +1,5 @@
 import { TASKS_FAILURE, TASKS_REQUEST, TASKS_SUCCESS } from '../types'
-
+import { toast } from 'react-toastify'
 
 const  { REACT_APP_API_ENDPOINT } = process.env
 
@@ -37,7 +37,6 @@ export const getTasks = (path) => dispatch => {
 
 export const deleteTask = id => dispatch => {
     dispatch(tasksRequest())
-
     fetch(`${REACT_APP_API_ENDPOINT}task/${id}`, {
         method: "DELETE",
         headers: {
@@ -53,11 +52,33 @@ export const deleteTask = id => dispatch => {
 
 export const editTaskStatus = data => dispatch => {
     const statusArray = ["NEW", "IN PROGRESS", "FINISHED"]
+    let newStatusIndex = ""
+    console.log(data)   
+if(data.status === "FINISHED") { 
+    return (
+    
+        fetch(`${REACT_APP_API_ENDPOINT}task/${data._id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem('token')
+        }
+    })
+    .then(response => response.json())
+    .then(data => dispatch(getTasks("")))
+    .catch(error =>dispatch(tasksFailure(error))))
+   
+   
+    
 
-    const newStatusIndex = 
-    statusArray.indexOf(data.status) > 1 ? 0 : statusArray.indexOf(data.status) + 1
+}  else {
+     newStatusIndex = statusArray.indexOf(data.status) > 1 ? 
+    0 : 
+    statusArray.indexOf(data.status) + 1
+}     
+       
 
-
+    
     fetch(`${REACT_APP_API_ENDPOINT}task/${data._id}`, {
         method: "PATCH",
         headers: {
@@ -75,6 +96,32 @@ export const editTaskStatus = data => dispatch => {
     })
     .then(response => response.json())
     .then(data => dispatch(getTasks("")))
+    .catch(error =>dispatch(tasksFailure(error)))
+
+}
+
+export const createTask = values => dispatch => {
+     fetch(`${REACT_APP_API_ENDPOINT}task`, {
+        method: "POST",
+        headers: {
+          "Content-Type" : "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token")
+        },
+        body: JSON.stringify({ task: values })
+      })
+      .then(response => response.json())
+      .then(data => { 
+        dispatch(getTasks(""))
+        toast('🦄 Se creo la tarea correctamente!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+      })
     .catch(error =>dispatch(tasksFailure(error)))
 
 }

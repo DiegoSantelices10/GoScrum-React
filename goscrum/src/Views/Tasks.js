@@ -3,12 +3,12 @@ import useResize from '../hooks/useResize'
 import Header from '../components/Header'
 import Card from '../components/Card'
 import TaskForm from '../components/TaskForm'
-import { ToastContainer, toast } from "react-toastify"
+import { ToastContainer } from "react-toastify"
 import debounce from 'lodash.debounce'
 
 import { useSelector, useDispatch } from 'react-redux'
 
-import { getTasks, deleteTask, editTaskStatus } from '../store/actions/tasksAction'
+import { getTasks, deleteTask, editTaskStatus, createTask } from '../store/actions/tasksAction'
 import { Radio, RadioGroup, FormControlLabel, FormControl } from '@mui/material'
 
 export default function Tasks() {
@@ -21,11 +21,12 @@ export default function Tasks() {
   const { isPhone } = useResize()
   
   const dispatch = useDispatch()
+
+  
   const { loading, error, tasks } = useSelector(state => {
     return state.tasksReducer
   })
 
-console.log(tasks)
   useEffect(() => { dispatch(getTasks(tasksFormWho === "ME" ? "/me" : "")) 
                   }, [tasksFormWho, dispatch])
 
@@ -68,23 +69,48 @@ console.log(tasks)
   const handleEditCardStatus = data => dispatch(editTaskStatus(data))
 
   return (
-    <div className='flex flex-col h-screen bg-slate-100'>
+    <div className='flex flex-col h-screen'>
+      <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      />
       <Header />
-      <main className='md:flex h-full'>
-        <ToastContainer />
-        <section className="md:w-2/6">
-          <div>
-            <h2 className='font-bold text-2xl text-center'>Crea una Tarea</h2>
-          </div>
-          <TaskForm />
+      <main className='md:flex md:h-full '>
+        <section className="md:w-2/6 w-full md:h-full md:rounded-r-3xl md:bg-gray-100 shadow-md">
+          <TaskForm create={createTask}/>
         </section>
 
-        <section className="container mx-auto md:w-4/6 h-full ">
+        <section className="container px-6 py-6 mx-auto md:w-4/6 h-full  ">
           <div>
-            <h2 className='font-bold text-2xl text-center'>Mis Tareas</h2>
+           <h2 className='font-bold text-2xl'>Mis Tareas</h2>
+            <div className="md:flex justify-center items-center md:gap-4 mt-6">
+            <div className="w-full">
+              <input type="text"
+                className='w-full px-4 py-2 border rounded-md'
+                placeholder="Buscar por titulo.."
+                onChange={handleSearch} />
+            </div>
+            <div className="w-full md:w-1/2">
+              <select id="status"
+                onChange={handleChangeImportance}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+                <option className='text-gray-400' value="ALL">Selecciona una prioridad</option>
+                <option value="HIGH">Alta</option>
+                <option value="MEDIUM">Media</option>
+                <option value="LOW">Baja</option>
+              </select>
+            </div>
+            </div>
           </div>
-          <div>
-            <FormControl>
+        <div className="px-3 py-2">
+          <FormControl>
               <RadioGroup
                 row
                 aria-labelledby='demo-row-radio-buttons-group-label'
@@ -100,42 +126,25 @@ console.log(tasks)
                   control={<Radio />}
                   label='Mis Tareas'
                 />
-
               </RadioGroup>
             </FormControl>
-            <div>
-              <input type="text"
-                className='w-full px-4 py-2 border rounded-md'
-                placeholder="Buscar por titulo.."
-                onChange={handleSearch} />
-            </div>
-            <div className="mt-4">
-              <select id="status"
-                onChange={handleChangeImportance}
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
-                <option value="">Selecciona una prioridad</option>
-                <option value="HIGH">Alta</option>
-                <option value="MEDIUM">Media</option>
-                <option value="LOW">Baja</option>
-              </select>
-            </div>
           </div>
           <div>
             {isPhone ? (!renderList?.length ? (<div>No hay tareas creadas</div>) : renderAllCards()) :
-              (<div className="flex justify-around ">
-                {!renderList?.length ? (<div>No hay Tareas Creadas</div>) :
+              (<div className="flex justify-between gap-x-5">
+                {!renderList?.length ? (<div className='text-center font-semibold w-full'>No hay Tareas Creadas</div>) :
                   (<>
-                    <div className="relative w-60">
-                      <h1 className=" font-semibold">Nuevas</h1>
+                    <div className="w-full">
+                      <h1 className=" font-bold text-center">Nuevas</h1>
                       {renderColumnCards("NEW")}
                     </div>
-                    <div className="relative w-60">
-                      <h1 className=" font-semibold">En proceso</h1>
+                    <div className=" w-full">
+                      <h1 className=" font-bold text-center">En proceso</h1>
                       {renderColumnCards("IN PROGRESS")}
 
                     </div>
-                    <div className="relative w-60">
-                      <h1 className=" font-semibold">Finalizadas</h1>
+                    <div className="w-full">
+                      <h1 className="font-bold text-center">Finalizadas</h1>
                       {renderColumnCards("FINISHED")}
 
                     </div>

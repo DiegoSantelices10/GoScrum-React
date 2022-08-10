@@ -9,11 +9,11 @@ export default function Login() {
     const navigate = useNavigate()
     const required = "*Campo obligatorio"
     const { REACT_APP_API_ENDPOINT } = process.env
-    
+
     let validationSchema = yup.object().shape({
         userName: yup.string().min(6, "la cantidad minima de caracteres es 6").required(required),
         password: yup.string().required(required)
-      });
+    });
 
     const { handleSubmit, handleChange, values, handleBlur, errors, touched } = useFormik({
         initialValues: {
@@ -24,28 +24,28 @@ export default function Login() {
 
         onSubmit: async (values) => {
             const { userName, password } = values
-                await fetch(`${REACT_APP_API_ENDPOINT}auth/login`, {
+            await fetch(`${REACT_APP_API_ENDPOINT}auth/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userName, password })
-                })
+            })
                 .then(response => response.json())
                 .then(data => {
                     if (data.status_code === 200) {
-                        console.log(data)
                         localStorage.setItem("token", data?.result?.token)
                         localStorage.setItem("userName", data?.result?.user.userName)
                         navigate("/", { replace: true })
-                        } else { 
-                            Swal.fire({
-                                title: 'Error!',
-                                text: 'Introduzca credenciales válidas',
-                                confirmButtonText: "Aceptar",
-                                width: "400px",
-                                timer: 10000,
-                                timerProgressBar: true,
-                                })
-                        }
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: 'Incorrecto',
+                            text: 'Introduzca credenciales válidas',
+                            confirmButtonText: "Aceptar",
+                            width: "400px",
+                            timer: 10000,
+                            timerProgressBar: true,
+                        })
+                    }
                 })
         }
     });
@@ -54,13 +54,13 @@ export default function Login() {
 
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="px-8 py-6 mt-4 text-left bg-white shadow-lg">
-                <h3 className="text-2xl font-bold text-center">Login to your account</h3>
+        <div className="flex items-center justify-center min-h-screen  md:bg-gray-100 ">
+            <div className="w-full md:h-auto md:w-96 px-6 py-6 text-left bg-white md:shadow-lg">
+                <h3 className="text-2xl font-bold text-center">Goscrum</h3>
                 <form onSubmit={handleSubmit}>
-                    <div className="mt-4">
+                    <h1 className="font-semibold text-center">Ingresa tus datos</h1>
+                    <div className="mt-2">
                         <div>
-                            <label className="block" >Usuario</label>
                             <input id="userName"
                                 type="text"
                                 placeholder="Usuario"
@@ -72,7 +72,6 @@ export default function Login() {
 
                         </div>
                         <div className="mt-4">
-                            <label className="block">Password</label>
                             <input id="password"
                                 type="password"
                                 placeholder="Password"
@@ -81,10 +80,20 @@ export default function Login() {
                                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600" />
                             {errors.password && touched.password && <span>{errors.password}</span>}
                         </div>
-                        <div className="flex items-baseline justify-between">
-                            <button type="submit" className="px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900">Login</button>
+
+                        <div className="flex items-center justify-beetwen gap-2 pt-8">
+                            <div className="w-1/2 text-center font-semibold 
+                                            hover:text-white hover:bg-blue-600 hover:rounded-lg px-6 py-2 ">
+                                <Link to="/register">Registrate</Link>
+                            </div>
+                            <div className="w-1/2">
+                                <button type="submit" 
+                                        className="w-full px-6 py-2 text-white font-semibold 
+                                                 bg-blue-600 rounded-lg hover:bg-blue-900">Login</button>
+                            </div>
                         </div>
-                        <div><Link to="/register">Registrate</Link></div>
+
+
                     </div>
                 </form>
             </div>

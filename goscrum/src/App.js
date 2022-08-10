@@ -8,6 +8,8 @@ import { Navigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 
 import { AnimatePresence, motion } from "framer-motion";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const RequireAuth = ({ children }) => {
   if (!localStorage.getItem("token")) {

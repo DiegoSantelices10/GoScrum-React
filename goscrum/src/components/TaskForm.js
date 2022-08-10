@@ -1,12 +1,15 @@
 import { React, useState, useEffect } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup';
-import { toast } from "react-toastify"
+import { useDispatch } from 'react-redux'
 
 
 
 
-export default function TaskForm() {
+export default function TaskForm({ create: createTask }) {
+
+  const dispatch = useDispatch()
+
 
 const { REACT_APP_API_ENDPOINT: API_ENDPOINT  } = process.env
 const required = "*Campo requerido"
@@ -47,35 +50,24 @@ useEffect( () => {
 
     },
     onSubmit: async function (values) {
-      await fetch(`${API_ENDPOINT}task`, {
-        method: "POST",
-        headers: {
-          "Content-Type" : "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token")
-        },
-        body: JSON.stringify({ task: values })
-      })
-      .then(response => response.json())
-      .then(data => { 
-        console.log(data)
-        resetForm()
-       alert("la tarea se creo")
-      })
+            resetForm()
+            dispatch(createTask(values))
   },
   validationSchema
   })
 
 
   return (
- <div className="w-full flex justify-center">
-    <div className="w-3/4 md:px-2 md:py-2 text-left md:bg-white md:shadow-lg">
+ <div className="flex md:items-center justify-center md:rounded-r-3xl">
+    <div className="w-full p-6 text-left">
+        <h2 className='font-bold text-2xl '>Crea una Tarea</h2>
         <form onSubmit={handleSubmit} >
-            <div className="mt-4 w-4/5 mx-auto">
+            <div className="mt-4 md:w-full mx-auto">
                     <div >
-                        <label className="block">Title</label>
                             <input id="title"
-                                   onBlur={handleBlur}
                                    type="text" 
+                                   placeholder="Titulo de la tarea"
+                                   onBlur={handleBlur}
                                    onChange={handleChange}
                                    value={values.title}
                                    className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 
@@ -83,39 +75,40 @@ useEffect( () => {
                                             {errors.title && touched.title && <span>{errors.title}</span>}
                     </div>
                     <div className="mt-4">
-                    <label className="block">Status</label>
                             <select id="status"
-                                  onBlur={handleBlur}
+                                   onBlur={handleBlur}
                                    onChange={handleChange}
                                    value={values.status}
                                   className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
-                                  <option value="">Selecciona un estado</option>
+                                  <option value="" className="text-slate-400">Selecciona un estado</option>
                                   {data?.status?.map( option =>  ( <option id={option} key={option}> {option} </option> ) )}
                                 </select>
                                 {errors.status && touched.status && <span>{errors.status}</span>}
                     </div>
                     <div className="mt-4">
-                    <label className="block">Importance</label>
                             <select id="importance"
                                    onBlur={handleBlur}
                                    onChange={handleChange}
                                    value={values.importance}
                                   className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">                                  
-                                 <option value="">Selecciona un estado</option>
+                                 <option value="" className="text-slate-400">Selecciona la importancia</option>
                                  {data?.importance?.map( option =>  ( <option id={option} key={option}> {option} </option> ) )}
                                 </select>
                                 {errors.importance && touched.importance && <span>{errors.importance}</span>}
                     </div>
                 <div className="mt-4">
-                    <label className="block">Description</label>
                             <textarea id="description"
+                                      rows="5"
                                       type="text"
-                                   onChange={handleChange}
-                                   value={values.description}
-                                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"/>
+                                      placeholder="Descripcion de la tarea..."
+                                      onChange={handleChange}
+                                      value={values.description}
+                                      className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"/>
                 </div>
                 <div className="flex items-baseline justify-between">
-                    <button type="submit" className="px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900">Login</button>
+                    <button type="submit" 
+                    className="px-6 py-2 my-3 text-white font-semibold w-full 
+                    bg-blue-600 rounded-lg hover:bg-blue-900">Crear Tarea</button>
                 </div>
             </div>
         </form>
