@@ -58,10 +58,10 @@ useEffect( () => {
 
 
   return (
- <div className="flex md:items-center justify-center md:rounded-r-3xl">
     <div className="w-full p-6 text-left">
         <h2 className='font-bold text-2xl '>Crea una Tarea</h2>
-        <form onSubmit={handleSubmit} >
+        <div className="flex md:items-center justify-center md:rounded-r-3xl w-full  h-full">
+        <form onSubmit={handleSubmit} className="w-full">
             <div className="mt-4 md:w-full mx-auto">
                     <div >
                             <input id="title"
@@ -70,45 +70,47 @@ useEffect( () => {
                                    onBlur={handleBlur}
                                    onChange={handleChange}
                                    value={values.title}
-                                   className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 
+                                   className="w-full px-4 py-2 mt-2 border rounded-3xl focus:outline-none focus:ring-1 
                                             focus:ring-blue-600"/>
                                             {errors.title && touched.title && <span>{errors.title}</span>}
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-4 px-3 bg-white rounded-3xl">
                             <select id="status"
                                    onBlur={handleBlur}
                                    onChange={handleChange}
                                    value={values.status}
-                                  className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
-                                  <option value="" className="text-slate-400">Selecciona un estado</option>
+                                  className="w-full py-2  border-none rounded-3xl focus:outline-none focus:ring-1 focus:ring-blue-600">
+                                  <option value="" className="bg-slate-200">Selecciona un estado</option>
                                   {data?.status?.map( option =>  ( <option id={option} key={option}> {option} </option> ) )}
                                 </select>
-                                {errors.status && touched.status && <span>{errors.status}</span>}
                     </div>
-                    <div className="mt-4">
+                    {errors.status && touched.status && <span>{errors.status}</span>}
+
+                    <div className="mt-4 px-3 bg-white rounded-3xl">
                             <select id="importance"
                                    onBlur={handleBlur}
                                    onChange={handleChange}
                                    value={values.importance}
-                                  className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">                                  
+                                  className="w-full  py-2   border-none rounded-3xl focus:outline-none focus:ring-1 focus:ring-blue-600">                                  
                                  <option value="" className="text-slate-400">Selecciona la importancia</option>
                                  {data?.importance?.map( option =>  ( <option id={option} key={option}> {option} </option> ) )}
                                 </select>
-                                {errors.importance && touched.importance && <span>{errors.importance}</span>}
                     </div>
-                <div className="mt-4">
+                    {errors.importance && touched.importance && <span>{errors.importance}</span>}
+
+                    <div className="mt-4">
                             <textarea id="description"
                                       rows="5"
                                       type="text"
                                       placeholder="Descripcion de la tarea..."
                                       onChange={handleChange}
                                       value={values.description}
-                                      className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"/>
-                </div>
+                                      className="w-full px-4 py-2 mt-2 border rounded-3xl focus:outline-none focus:ring-1 focus:ring-blue-600"/>
+                    </div>
                 <div className="flex items-baseline justify-between">
                     <button type="submit" 
                     className="px-6 py-2 my-3 text-white font-semibold w-full 
-                    bg-blue-600 rounded-lg hover:bg-blue-900">Crear Tarea</button>
+                    bg-blue-600 rounded-3xl hover:bg-blue-900">Crear Tarea</button>
                 </div>
             </div>
         </form>

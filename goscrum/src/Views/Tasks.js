@@ -5,7 +5,7 @@ import Card from '../components/Card'
 import TaskForm from '../components/TaskForm'
 import { ToastContainer } from "react-toastify"
 import debounce from 'lodash.debounce'
-
+import CardSkeleton from '../components/CardSkeleton'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { getTasks, deleteTask, editTaskStatus, createTask } from '../store/actions/tasksAction'
@@ -17,13 +17,14 @@ export default function Tasks() {
   const [list, setList] = useState(null)
   const [search, setSearch] = useState(null)
   const [renderList, setRenderList] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
   const [tasksFormWho, setTasksFormWho] = useState("ALL")
   const { isPhone } = useResize()
   
   const dispatch = useDispatch()
 
   
-  const { loading, error, tasks } = useSelector(state => {
+  const { error, tasks } = useSelector(state => {
     return state.tasksReducer
   })
 
@@ -35,6 +36,7 @@ export default function Tasks() {
     if (tasks?.length) {
       setList(tasks)
       setRenderList(tasks)
+      setIsLoading(false)
     }
   }, [tasks])
 
@@ -45,7 +47,7 @@ export default function Tasks() {
     } else {
       setRenderList(list)
     }
-  }, [search])
+  }, [search, list])
 
   if(error) return <div>Hay un error</div>
 
@@ -83,11 +85,11 @@ export default function Tasks() {
       />
       <Header />
       <main className='md:flex md:h-full '>
-        <section className="md:w-2/6 w-full md:h-full md:rounded-r-3xl md:bg-gray-100 shadow-md">
+        <section className="md:w-1/4 w-full md:h-full md:rounded-r-3xl md:bg-gray-100 shadow-md">
           <TaskForm create={createTask}/>
         </section>
 
-        <section className="container px-6 py-6 mx-auto md:w-4/6 h-full  ">
+        <section className="container px-6 py-6 mx-auto md:w-3/4 h-full ">
           <div>
            <h2 className='font-bold text-2xl'>Mis Tareas</h2>
             <div className="md:flex justify-center items-center md:gap-4 mt-6">
@@ -132,8 +134,23 @@ export default function Tasks() {
           <div>
             {isPhone ? (!renderList?.length ? (<div>No hay tareas creadas</div>) : renderAllCards()) :
               (<div className="flex justify-between gap-x-5">
-                {!renderList?.length ? (<div className='text-center font-semibold w-full'>No hay Tareas Creadas</div>) :
-                  (<>
+              {!renderList?.length ? isLoading ?   <>
+                    <div className="w-full">
+                      <h1 className=" font-bold text-center">Nuevas</h1>
+                      <CardSkeleton/>
+                    </div>
+                    <div className=" w-full">
+                      <h1 className=" font-bold text-center">En proceso</h1>
+                      <CardSkeleton/>
+                    </div>
+                    <div className="w-full">
+                      <h1 className="font-bold text-center">Finalizadas</h1>
+                      <CardSkeleton/>
+                    </div>
+                  </>   :
+               <div className='text-center font-semibold w-full text-white'>No Hay Tareas Creadas</div> : 
+              (
+                <>
                     <div className="w-full">
                       <h1 className=" font-bold text-center">Nuevas</h1>
                       {renderColumnCards("NEW")}
@@ -148,10 +165,14 @@ export default function Tasks() {
                       {renderColumnCards("FINISHED")}
 
                     </div>
-                  </>)}
-
+                  </>
+              )
+              
+              
+              }
               </div>
-              )}
+              )
+            }
           </div>
         </section>
       </main>

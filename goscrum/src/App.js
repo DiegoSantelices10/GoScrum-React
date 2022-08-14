@@ -10,6 +10,8 @@ import { Routes, Route } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import 'react-toastify/dist/ReactToastify.css';
 
+import { SkeletonTheme } from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const RequireAuth = ({ children }) => {
   if (!localStorage.getItem("token")) {
@@ -26,6 +28,7 @@ const pageTransition = {
 function App() {
   return (
     <AnimatePresence>
+      <SkeletonTheme baseColor="#DEDEDE" highlightColor="#444">
       <Routes>
         <Route
           path="/"
@@ -102,6 +105,7 @@ function App() {
           }
         />
       </Routes>
+      </SkeletonTheme>
     </AnimatePresence>
   );
 }
