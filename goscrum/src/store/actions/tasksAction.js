@@ -25,7 +25,7 @@ export const getTasks = (path) => dispatch => {
     fetch(`${REACT_APP_API_ENDPOINT}task${path}`, {
         headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem('token')
+            Authorization: "Bearer " + sessionStorage.getItem('token')
         }
     })
     .then(response => response.json())
@@ -41,7 +41,7 @@ export const deleteTask = id => dispatch => {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem('token')
+            Authorization: "Bearer " + sessionStorage.getItem('token')
         }
     })
     .then(response => response.json())
@@ -61,7 +61,7 @@ if(data.status === "FINISHED") {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem('token')
+            Authorization: "Bearer " + sessionStorage.getItem('token')
         }
     })
     .then(response => response.json())
@@ -83,7 +83,7 @@ if(data.status === "FINISHED") {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem('token')
+            Authorization: "Bearer " + sessionStorage.getItem('token')
         },
         body: JSON.stringify({
             task: {
@@ -105,7 +105,7 @@ export const createTask = values => dispatch => {
         method: "POST",
         headers: {
           "Content-Type" : "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token")
+          Authorization: "Bearer " + sessionStorage.getItem("token")
         },
         body: JSON.stringify({ task: values })
       })

@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { v4 as uuidv4 } from 'uuid'
 import { Link, useNavigate } from 'react-router-dom'
 import { FormControlLabel, Switch } from '@mui/material'
+import Swal from "sweetalert2"
 
 
 
@@ -71,8 +72,15 @@ export default function Register() {
       })
       .then(response => response.json())
       .then(data => { 
-
-        navigate("/registered/" + data?.result?.user?.teamID, {replace: true})  
+        Swal.fire({
+          icon: "success",
+          title: 'Usuario creado',
+          text: 'Con exito',
+          width: "400px",
+          timer: 10000,
+          timerProgressBar: true,
+      })
+        navigate("/login" , {replace: true})  
       }) 
   }
 

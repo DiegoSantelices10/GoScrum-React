@@ -14,7 +14,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 
 const RequireAuth = ({ children }) => {
-  if (!localStorage.getItem("token")) {
+  if (!sessionStorage.getItem("token")) {
     return <Navigate to="/login" replace={true} />;
   }
   return children;

@@ -32,8 +32,8 @@ export default function Login() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.status_code === 200) {
-                        localStorage.setItem("token", data?.result?.token)
-                        localStorage.setItem("userName", data?.result?.user.userName)
+                        sessionStorage.setItem("token", data?.result?.token)
+                        sessionStorage.setItem("userName", data?.result?.user.userName)
                         navigate("/", { replace: true })
                     } else {
                         Swal.fire({
