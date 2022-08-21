@@ -29,7 +29,7 @@ function App() {
   return (
     <AnimatePresence>
       <SkeletonTheme baseColor="#DEDEDE" highlightColor="#444">
-      <Routes basename="GoScrum-React/">
+      <Routes >
         <Route
           path="/"
           element={
