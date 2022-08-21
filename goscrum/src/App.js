@@ -29,7 +29,7 @@ function App() {
   return (
     <AnimatePresence>
       <SkeletonTheme baseColor="#DEDEDE" highlightColor="#444">
-      <Routes>
+      <Routes basename="GoScrum-React/">
         <Route
           path="/"
           element={
@@ -48,7 +48,7 @@ function App() {
         />
         <Route
           index
-          path="/login"
+          path="login"
           element={
             <motion.div
               className="page"
@@ -62,7 +62,7 @@ function App() {
           }
         />
         <Route
-          path="/registered/:teamID"
+          path="registered/:teamID"
           element={
             <motion.div
               className="page"
@@ -77,7 +77,7 @@ function App() {
           />
          <Route
           index
-          path="/register"
+          path="register"
           element={
             <motion.div
               className="page"
