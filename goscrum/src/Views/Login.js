@@ -54,11 +54,11 @@ export default function Login() {
 
 
     return (
-        <div className="flex items-center justify-center min-h-screen  md:bg-gray-100 ">
-            <div className="w-full md:h-auto md:w-96 px-6 py-6 text-left bg-white md:shadow-lg">
-                <h3 className="text-2xl font-bold text-center">Goscrum</h3>
+        <div className="flex items-center justify-center min-h-screen bg-slate-800  md:bg-slate-900 ">
+            <div className="w-full md:h-auto md:w-96 px-6 py-6 text-left rounded-xl bg-slate-800 md:shadow-md md:shadow-slate-500/60">
+                <h3 className="text-2xl font-bold text-center text-white">Goscrum</h3>
                 <form onSubmit={handleSubmit}>
-                    <h1 className="font-semibold text-center">Ingresa tus datos</h1>
+                    <h1 className="font-semibold text-center text-white">Ingresa tus datos</h1>
                     <div className="mt-2">
                         <div>
                             <input id="userName"
@@ -67,8 +67,8 @@ export default function Login() {
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                                 value={values.userName}
-                                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600" />
-                            {errors.userName && touched.userName && <span>{errors.userName}</span>}
+                                className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white" />
+                            {errors.userName && touched.userName && <span className="text-white text-xs">{errors.userName}</span>}
 
                         </div>
                         <div className="mt-4">
@@ -77,13 +77,13 @@ export default function Login() {
                                 placeholder="Password"
                                 onChange={handleChange}
                                 value={values.password}
-                                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600" />
-                            {errors.password && touched.password && <span>{errors.password}</span>}
+                                className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white" />
+                            {errors.password && touched.password && <span className="text-white text-xs">{errors.password}</span>}
                         </div>
 
                         <div className="flex items-center justify-beetwen gap-2 pt-8">
                             <div className="w-1/2 text-center font-semibold 
-                                            hover:text-white hover:bg-blue-600 hover:rounded-lg px-6 py-2 ">
+                                             text-white hover:bg-blue-600 hover:rounded-lg px-6 py-2 ">
                                 <Link to="/register">Registrate</Link>
                             </div>
                             <div className="w-1/2">

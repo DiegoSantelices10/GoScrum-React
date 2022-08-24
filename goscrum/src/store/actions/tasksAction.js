@@ -1,6 +1,6 @@
 import { TASKS_FAILURE, TASKS_REQUEST, TASKS_SUCCESS } from '../types'
 import { toast } from 'react-toastify'
-
+import Swal from 'sweetalert2'
 const  { REACT_APP_API_ENDPOINT } = process.env
 
 
@@ -53,32 +53,35 @@ export const deleteTask = id => dispatch => {
 export const editTaskStatus = data => dispatch => {
     const statusArray = ["NEW", "IN PROGRESS", "FINISHED"]
     let newStatusIndex = ""
-    console.log(data)   
 if(data.status === "FINISHED") { 
     return (
+        Swal.fire({
+            title: 'Deseas eliminar la tarea?',
+            showCancelButton: true,
+            confirmButtonText: 'Confirmar',
+          }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`${REACT_APP_API_ENDPOINT}task/${data._id}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + sessionStorage.getItem('token')
+                    }
+                })
+                .then(response => response.json())
+                .then(data => dispatch(getTasks("")))
+                .catch(error =>dispatch(tasksFailure(error)))
+                
+            }
+          })
     
-        fetch(`${REACT_APP_API_ENDPOINT}task/${data._id}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + sessionStorage.getItem('token')
-        }
-    })
-    .then(response => response.json())
-    .then(data => dispatch(getTasks("")))
-    .catch(error =>dispatch(tasksFailure(error))))
-   
-   
+        
     
-
+    )
 }  else {
-     newStatusIndex = statusArray.indexOf(data.status) > 1 ? 
-    0 : 
+     newStatusIndex = statusArray.indexOf(data.status) > 1 ? 0 : 
     statusArray.indexOf(data.status) + 1
 }     
-       
-
-    
     fetch(`${REACT_APP_API_ENDPOINT}task/${data._id}`, {
         method: "PATCH",
         headers: {
@@ -99,6 +102,9 @@ if(data.status === "FINISHED") {
     .catch(error =>dispatch(tasksFailure(error)))
 
 }
+
+
+
 
 export const createTask = values => dispatch => {
      fetch(`${REACT_APP_API_ENDPOINT}task`, {

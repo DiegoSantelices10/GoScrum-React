@@ -2,18 +2,35 @@ import React, { useState, useEffect } from 'react'
 import useResize from '../hooks/useResize'
 import Header from '../components/Header'
 import Card from '../components/Card'
+import Panel from '../components/Panel'
 import TaskForm from '../components/TaskForm'
 import { ToastContainer } from "react-toastify"
 import debounce from 'lodash.debounce'
 import CardSkeleton from '../components/CardSkeleton'
 import { useSelector, useDispatch } from 'react-redux'
-
+import Swal from 'sweetalert2'
 import { getTasks, deleteTask, editTaskStatus, createTask } from '../store/actions/tasksAction'
-import { Radio, RadioGroup, FormControlLabel, FormControl } from '@mui/material'
+
+import { Backdrop, Box, Modal, Fade } from '@mui/material';
+
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 370,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24
+};
+
+
+
 
 export default function Tasks() {
 
-
+  const [open, setOpen] = React.useState(false);
   const [list, setList] = useState(null)
   const [search, setSearch] = useState(null)
   const [renderList, setRenderList] = useState(null)
@@ -22,6 +39,9 @@ export default function Tasks() {
   const { isPhone } = useResize()
 
   const dispatch = useDispatch()
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
 
   const { error, tasks } = useSelector(state => {
@@ -42,7 +62,7 @@ export default function Tasks() {
         setIsLoading(true)
       }, 3000);
     } else {
-      
+
     }
   }, [tasks])
 
@@ -74,11 +94,39 @@ export default function Tasks() {
     setSearch(e?.target?.value)
   }, 1000)
 
-  const handleDelete = id => dispatch(deleteTask(id))
+  const handleDelete = id => {
+    Swal.fire({
+      title: 'Deseas eliminar la tarea?',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteTask(id))
+      }
+    })
+  }
   const handleEditCardStatus = data => dispatch(editTaskStatus(data))
 
   return (
-    <div className='flex flex-col h-screen'>
+    <div className='w-full max-h-full  p-0 m-0'>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <Box sx={style}>
+            <TaskForm create={createTask} closeModal={handleClose} />
+          </Box>
+        </Fade>
+      </Modal>
+
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -91,86 +139,47 @@ export default function Tasks() {
         pauseOnHover
       />
       <Header />
-      <main className='md:flex md:h-full '>
-        <section className="md:w-1/4 w-full md:h-full md:rounded-r-3xl bg-gray-100 shadow-md">
-          <TaskForm create={createTask} />
-        </section>
+      <div className="md:flex md:p-4 md:pt-8 md:gap-x-4" >
+        <div className="px-4 py-5 md:px-0  w-full md:w-1/5 md:h-full">
+            <button onClick={handleOpen}
+              className="w-full md:w-full  px-6 py-2 text-white font-semibold bg-slate-700 rounded-lg hover:bg-slate-600">
+              Tarea Nueva
+            </button>
+        </div>
 
-        <section className="container px-3 md:px-4  mx-auto md:w-3/4 h-full ">
-          <div className="md:bg-gray-100 px-4 pt-6 md:rounded-b-3xl">
-            <div>
-              <h2 className='font-bold text-2xl'>Mis Tareas</h2>
-              <div className="md:flex justify-center items-center md:gap-4 mt-6">
-                <div className="w-full my-2">
-                  <input type="text"
-                    className='w-full px-4 py-2 border rounded-md'
-                    placeholder="Buscar por titulo.."
-                    onChange={handleSearch} />
-                </div>
-                <div className="w-full md:w-1/2 my-2">
-                  <select id="status"
-                    onChange={handleChangeImportance}
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
-                    <option className='text-gray-400' value="ALL">Selecciona una prioridad</option>
-                    <option value="HIGH">Alta</option>
-                    <option value="MEDIUM">Media</option>
-                    <option value="LOW">Baja</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div className="px-3 py-2">
-              <FormControl>
-                <RadioGroup
-                  row
-                  aria-labelledby='demo-row-radio-buttons-group-label'
-                  onChange={e => setTasksFormWho(e.currentTarget.value)}
-                >
-                  <FormControlLabel
-                    value="ALL"
-                    control={<Radio />}
-                    label='Todas'
-                  />
-                  <FormControlLabel
-                    value="ME"
-                    control={<Radio />}
-                    label='Mis Tareas'
-                  />
-                </RadioGroup>
-              </FormControl>
-            </div>
-          </div>
-          <div>
-            {isPhone ? (!renderList?.length ? (<div>No hay tareas creadas</div>) : !isLoading ?  ( <CardSkeleton/> ) : renderAllCards()) :
-              (<div className="flex justify-between gap-x-5 mt-5">
-                {!renderList?.length ? ( <div className='text-center font-semibold w-full '>No Hay Tareas Creadas</div> ) 
-                : !isLoading ? ( <CardSkeleton/> ):(
-                    <>
-                      <div className="w-full">
-                        <h1 className=" font-bold text-center">Nuevas</h1>
-                        {renderColumnCards("NEW")}
-                      </div>
-                      <div className=" w-full">
-                        <h1 className=" font-bold text-center">En proceso</h1>
-                        {renderColumnCards("IN PROGRESS")}
+        <div className="md:w-4/5 ">
+          <Panel searchTask={handleSearch} tasksFormWho={setTasksFormWho} changeImportance={handleChangeImportance} />
+          <div className="md:flex md:justify-between md:mt-3" >
+            {isPhone ? (!renderList?.length ? (<div className="text-white">No hay tareas creadas</div>)
+              : !isLoading ? (<CardSkeleton />)
+                : renderAllCards())
 
-                      </div>
-                      <div className="w-full">
-                        <h1 className="font-bold text-center">Finalizadas</h1>
-                        {renderColumnCards("FINISHED")}
+              : !renderList?.length ? (<div className='text-center text-white font-semibold w-full '>No Hay Tareas Creadas</div>)
+                : !isLoading ? (<CardSkeleton />)
 
-                      </div>
-                    </>
-                  )
+                  : (<>
+                    <div className="w-1/3">
+                      <h1 className=" font-bold text-center text-white">Nuevas</h1>
+                      {renderColumnCards("NEW")}
+                    </div>
+                    <div className="w-1/3">
+                      <h1 className=" font-bold text-center text-white">En proceso</h1>
+                      {renderColumnCards("IN PROGRESS")}
 
+                    </div>
+                    <div className="w-1/3">
+                      <h1 className="font-bold text-center text-white">Finalizadas</h1>
+                      {renderColumnCards("FINISHED")}
 
-                }
-              </div>
-              )
+                    </div>
+                  </>)
             }
+
           </div>
-        </section>
-      </main>
+        </div>
+
+      </div>
+
 
     </div>
   )

@@ -53,6 +53,7 @@ export default function Register() {
     onSubmit: async () => {
       const teamID = !values.teamID ? uuidv4() : values.teamID
   
+
       await fetch(`${REACT_APP_API_ENDPOINT}auth/register`, {
         method: "POST",
         headers: {
@@ -74,8 +75,9 @@ export default function Register() {
       .then(data => { 
         Swal.fire({
           icon: "success",
-          title: 'Usuario creado',
-          text: 'Con exito',
+          title: 'Usuario creado con exito',
+          html: '<p>Copia el id para compartir con tu equipo</p>' +
+                `<p>${teamID}</p>`,
           width: "400px",
           timer: 10000,
           timerProgressBar: true,
@@ -88,9 +90,9 @@ export default function Register() {
 
 
   return (
-    <div className="flex items-center justify-center min-h-screen md:bg-gray-100">
-    <div className="w-full md:h-auto md:w-96 px-6 py-6 text-left bg-white md:shadow-lg">
-        <h3 className="text-2xl font-bold text-center">REGISTRATE</h3>
+    <div className="flex items-center justify-center min-h-screen bg-slate-800  md:bg-slate-900 ">
+    <div className="w-full md:h-auto md:w-96 px-6 py-6 text-left rounded-xl bg-slate-800 md:shadow-md md:shadow-slate-500/60">
+        <h3 className="text-2xl font-bold text-center text-white">¡Crea tu cuenta!</h3>
         <form onSubmit={handleSubmit}>
           <div className="mt-4">
             <div>
@@ -100,62 +102,63 @@ export default function Register() {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.userName}
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"/>
-              {errors.userName && touched.userName && <span className="text-sm text-red-900">{errors.userName}</span>}
+                className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
+              {errors.userName && touched.userName && <span className="text-sm text-white">{errors.userName}</span>}
             </div>
-            <div>
+            <div className="mt-2">
               <input id="password"
                 type="password"
                 placeholder="Password nuevo"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.password}
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"/>
-              {errors.password && touched.password && <span className="text-sm text-red-900">{errors.password}</span>}
+                className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
+              {errors.password && touched.password && <span className="text-sm text-white">{errors.password}</span>}
             </div>
-            <div>
+            <div className="mt-2">
               <input id="email"
                 type="email"
                 placeholder="Correo electronico"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.email}
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"/>
-              {errors.email && touched.email && <span className="text-sm text-red-900">{errors.email}</span>}
+                className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
+              {errors.email && touched.email && <span className="text-sm text-white">{errors.email}</span>}
             </div>
            
             <FormControlLabel
                 control={<Switch
-                          value={values.switch}
-                          onChange={() => setFieldValue("switch", !values.switch)}
+                          value={values.teamID}
+                          onChange={() => setFieldValue("switch", !values.teamID)}
                           name="switch"
                           color="primary"/>} 
 
                           label="Perteneces a un equipo creado?"
-                          className="px-2 pt-2 text-sm font-semibold" />
+                          className="px-2 pt-2 text-sm  text-white" />
+                          
+                       {values.switch &&  
+                              ( <div>
+                                    <input id="teamID"
+                                    type="text"
+                                    placeholder="Ingresa el ID de tu equipo."
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    value={values.teamID}
+                                    className="w-full px-4 py-2 mb-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
+                              </div>)
+                        }  
 
-
-            {values.switch && 
-            ( <div>
-                <input id="teamID"
-                type="text"
-                placeholder="Ingresa el ID de tu equipo."
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.teamID}
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"/>
-              </div>)}
-
+            
             <div >
               <select id="role"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.role}
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+                className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white">
                 <option value="">Selecciona un Rol</option>
                 {data?.Rol?.map( option =>  (<option key={option} value={option}> {option} </option>) )}
               </select>
-              {errors.role && touched.role && <span className="text-sm text-red-900">{errors.role}</span>}
+              {errors.role && touched.role && <span className="text-sm text-white">{errors.role}</span>}
             </div>
  
 
@@ -165,12 +168,12 @@ export default function Register() {
                 onBlur={handleBlur}
                 onChange={e => handleChangeContinent(e.currentTarget.value)}
                 value={values.continent}
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+                className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white">
                 <option value="">Selecciona un Continente</option>
                 {data?.continente?.map( option =>  ( <option key={option} value={option} > {option} </option> ) )}
                
               </select>
-              {errors.continent && touched.continent && <span className="text-sm text-red-900">{errors.continent}</span>}
+              {errors.continent && touched.continent && <span className="text-sm text-white">{errors.continent}</span>}
             </div>
             {values.continent === "America" && (
               <div className="mt-4">
@@ -178,16 +181,16 @@ export default function Register() {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.region}
-                  className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+                  className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white">
                   <option value="">Selecciona una Region</option>
                 {data?.region?.map( option =>  ( <option key={option} value={option}> {option} </option> ) )}
                 </select>
-                {errors.region && touched.region && <span className="text-sm text-red-900">{errors.region}</span>}
+                {errors.region && touched.region && <span className="text-sm text-white">{errors.region}</span>}
               </div>
             )}
               <div className="flex items-center justify-beetwen gap-2 pt-8">
                             <div className="w-1/2 text-center font-semibold text-sm 
-                                            hover:text-white hover:bg-blue-600 hover:rounded-lg px-6 py-2 ">
+                                            text-white hover:bg-blue-600 hover:rounded-lg px-6 py-2 ">
                                 <Link to="/login">Ya tienes cuenta</Link>
                             </div>
                             <div className="w-1/2">

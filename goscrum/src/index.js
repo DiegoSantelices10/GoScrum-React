@@ -13,7 +13,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter basename="GoScrum-React/">
       <Provider store={store}>
-        <App />
+        <App  />
       </Provider>    
     </BrowserRouter>
   </React.StrictMode>

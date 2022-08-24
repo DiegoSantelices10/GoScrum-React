@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 
 
 
-export default function TaskForm({ create: createTask }) {
+export default function TaskForm({ create: createTask, closeModal }) {
 
   const dispatch = useDispatch()
 
@@ -58,10 +58,10 @@ useEffect( () => {
 
 
   return (
-    <div className="w-full p-6 text-center">
-        <h2 className='font-bold text-2xl '>Crea una Tarea</h2>
-        <div className="flex md:items-center justify-center md:rounded-r-3xl w-full  h-full">
-        <form onSubmit={handleSubmit} className="w-full">
+    <div className=" p-4 pt-5 md:h-auto  text-center bg-slate-900 md:bg-slate-800  ">
+        <h2 className='font-bold text-2xl text-white'>Crea una Tarea</h2>
+        <div className="flex md:items-center justify-center  w-full  h-full">
+        <form onSubmit={handleSubmit} className="w-full h-full">
             <div className="mt-4 md:w-full mx-auto">
                     <div >
                             <input id="title"
@@ -70,47 +70,50 @@ useEffect( () => {
                                    onBlur={handleBlur}
                                    onChange={handleChange}
                                    value={values.title}
-                                   className="w-full px-4 py-2 mt-2 border rounded-3xl focus:outline-none focus:ring-1 
-                                            focus:ring-blue-600"/>
-                                            {errors.title && touched.title && <span className='text-left text-red-900 text-xs'>{errors.title}</span>}
+                                   className="w-full px-4 py-2 mt-2 border-none rounded-3xl bg-slate-500 text-white
+                                   focus:outline-none focus:ring-2 
+                                            focus:ring-white"/>
+                                            {errors.title && touched.title && <span className='text-left text-white text-xs'>{errors.title}</span>}
                     </div>
-                    <div className="mt-4 px-3 bg-white rounded-3xl  focus:ring-1 focus:ring-blue-600">
+                    <div className="mt-4 px-3  rounded-3xl   bg-slate-500 text-white">
                             <select id="status"
                                    onBlur={handleBlur}
                                    onChange={handleChange}
                                    value={values.status}
-                                  className="w-full py-2  border-none rounded-3xl focus:outline-none ">
-                                  <option value="" className="bg-slate-200">Selecciona un estado</option>
+                                  className="w-full py-2  border-none rounded-3xl focus:outline-none bg-slate-500 text-white">
+                                  <option value="" >Selecciona un estado</option>
                                   {data?.status?.map( option =>  ( <option id={option} key={option}> {option} </option> ) )}
                                 </select>
                     </div>
-                    {errors.status && touched.status && <span className='text-left text-red-900 text-xs'>{errors.status}</span>}
+                    {errors.status && touched.status && <span className='text-left text-white text-xs'>{errors.status}</span>}
 
-                    <div className="mt-4 px-3 bg-white rounded-3xl  focus:ring-1 focus:ring-blue-600">
+                    <div className="mt-4 px-3  rounded-3xl  bg-slate-500 text-white">
                             <select id="importance"
                                    onBlur={handleBlur}
                                    onChange={handleChange}
                                    value={values.importance}
-                                  className="w-full  py-2   border-none rounded-3xl focus:outline-none">                                  
-                                 <option value="" className="text-slate-400">Selecciona la importancia</option>
+                                  className="w-full  py-2   border-none rounded-3xl bg-slate-500 text-white focus:outline-none">                                  
+                                 <option value="" >Selecciona la importancia</option>
                                  {data?.importance?.map( option =>  ( <option id={option} key={option}> {option} </option> ) )}
                                 </select>
                     </div>
-                    {errors.importance && touched.importance && <span className='w-full text-left text-red-900 text-xs'>{errors.importance}</span>}
+                    
+                    {errors.importance && touched.importance && <span className='relative w-full text-left text-white text-xs'>{errors.importance}</span>}
 
                     <div className="mt-4">
                             <textarea id="description"
-                                      rows="7"
+                                      rows="5"
                                       type="text"
                                       placeholder="Descripcion de la tarea..."
                                       onChange={handleChange}
                                       value={values.description}
-                                      className="w-full px-4 py-2 mt-2 border rounded-3xl focus:outline-none focus:ring-1 focus:ring-blue-600"/>
+                                      className="w-full px-4 py-2 mt-2 border-none rounded-3xl bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
                     </div>
                 <div className="flex items-baseline justify-between">
                     <button type="submit" 
-                    className="px-6 py-2 my-3 text-white font-semibold w-full 
-                    bg-stone-900 rounded-3xl hover:bg-stone-800">Crear Tarea</button>
+                    className="px-6 py-2 mt-3 text-white font-semibold w-full 
+                    bg-slate-600 rounded-3xl hover:bg-stone-500"
+                    onClick={() => closeModal()}>Crear Tarea</button>
                 </div>
             </div>
         </form>

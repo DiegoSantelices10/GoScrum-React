@@ -9,26 +9,27 @@ export default function Card({deleteCard, editCardStatus, data, data: {_id, titl
 const datetime = new Date(createdAt).toLocaleString() + " hs."
 
   return (
-    <div className="relative w-full md:w-full  mx-auto my-3 px-4 md:px-1">
-    <div className="bg-white p-3 rounded-md border text-sm">
+    <div className="w-full md:w-full md:relative  mx-auto my-3 px-4 md:px-1 ">
+    <div className="bg-slate-800 p-3 rounded-md  text-sm">
       <button className="absolute right-7" onClick={() => deleteCard(_id)}>
       <FiTrash2 className="text-red-600" size={20}/>
       </button>
-      <h3 className="text-base font-semibold">{title}</h3>
-      <h5 className="font-medium text-slate-600">{userName}</h5>
-      <h6 className="font-medium mb-2">{datetime }</h6>
+      <h3 className="text-base text-white font-semibold">{title}</h3>
+      <h5 className="font-medium text-white">{userName}</h5>
+      <h6 className="font-medium mb-2 text-white">{datetime }</h6>
       <div className="flex">
         <button className={`${importance === "LOW" ? 
               "bg-yellow-500 text-xs font-semibold text-white p-1 w-1/2 rounded-xl  hover:bg-red-400 transition-colors" : 
               importance === "MEDIUM" ? "bg-orange-500 text-xs font-semibold text-white p-1 w-1/2 rounded-xl  hover:bg-red-400 transition-colors" :
               "bg-red-600 text-xs font-semibold text-white p-1 w-1/2 rounded-xl  hover:bg-red-400 transition-colors" }`}>
                 {importance}</button>
-        <button className="absolute right-7 text-xs font-semibold text-white"
-              onClick={() => editCardStatus(data)}><span className="text-red-600">{status}</span><FiChevronsRight className="text-red-600" size={30}/></button>
+              <button className="absolute right-7 text-xs font-semibold text-white"
+                  onClick={() => editCardStatus(data)}><FiChevronsRight className="text-red-600" size={30}/>
+              </button>
       </div>
       
       
-      <p className="font-medium w-3/4">{description}</p>
+      <p className="font-medium w-3/4 text-white">{description}</p>
     </div>
   </div>
   );
