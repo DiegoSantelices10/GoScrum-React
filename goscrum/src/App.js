@@ -28,7 +28,7 @@ const pageTransition = {
 function App() {
   return (
     <AnimatePresence>
-      <SkeletonTheme baseColor="#DEDEDE" highlightColor="#444">
+      <SkeletonTheme baseColor="#14142B" highlightColor="#444">
       <Routes >
         <Route
           path="/"

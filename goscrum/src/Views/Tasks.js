@@ -22,7 +22,9 @@ const style = {
   width: 370,
   bgcolor: 'background.paper',
   border: '2px solid #000',
-  boxShadow: 24
+  boxShadow: 24,
+  borderRadius: "20px",
+  
 };
 
 

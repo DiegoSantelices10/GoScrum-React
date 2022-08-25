@@ -58,7 +58,7 @@ useEffect( () => {
 
 
   return (
-    <div className=" p-4 pt-5 md:h-auto  text-center bg-slate-900 md:bg-slate-800  ">
+    <div className=" p-4 pt-5 md:h-auto rounded-md  text-center bg-slate-900 md:bg-slate-800  ">
         <h2 className='font-bold text-2xl text-white'>Crea una Tarea</h2>
         <div className="flex md:items-center justify-center  w-full  h-full">
         <form onSubmit={handleSubmit} className="w-full h-full">
@@ -70,29 +70,29 @@ useEffect( () => {
                                    onBlur={handleBlur}
                                    onChange={handleChange}
                                    value={values.title}
-                                   className="w-full px-4 py-2 mt-2 border-none rounded-3xl bg-slate-500 text-white
+                                   className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white
                                    focus:outline-none focus:ring-2 
                                             focus:ring-white"/>
                                             {errors.title && touched.title && <span className='text-left text-white text-xs'>{errors.title}</span>}
                     </div>
-                    <div className="mt-4 px-3  rounded-3xl   bg-slate-500 text-white">
+                    <div className="mt-4 px-3  rounded   bg-slate-500 text-white">
                             <select id="status"
                                    onBlur={handleBlur}
                                    onChange={handleChange}
                                    value={values.status}
-                                  className="w-full py-2  border-none rounded-3xl focus:outline-none bg-slate-500 text-white">
+                                  className="w-full py-2  border-none rounded-md focus:outline-none bg-slate-500 text-white">
                                   <option value="" >Selecciona un estado</option>
                                   {data?.status?.map( option =>  ( <option id={option} key={option}> {option} </option> ) )}
                                 </select>
                     </div>
                     {errors.status && touched.status && <span className='text-left text-white text-xs'>{errors.status}</span>}
 
-                    <div className="mt-4 px-3  rounded-3xl  bg-slate-500 text-white">
+                    <div className="mt-4 px-3  rounded-md  bg-slate-500 text-white">
                             <select id="importance"
                                    onBlur={handleBlur}
                                    onChange={handleChange}
                                    value={values.importance}
-                                  className="w-full  py-2   border-none rounded-3xl bg-slate-500 text-white focus:outline-none">                                  
+                                  className="w-full  py-2   border-none rounded-md bg-slate-500 text-white focus:outline-none">                                  
                                  <option value="" >Selecciona la importancia</option>
                                  {data?.importance?.map( option =>  ( <option id={option} key={option}> {option} </option> ) )}
                                 </select>
@@ -107,12 +107,12 @@ useEffect( () => {
                                       placeholder="Descripcion de la tarea..."
                                       onChange={handleChange}
                                       value={values.description}
-                                      className="w-full px-4 py-2 mt-2 border-none rounded-3xl bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
+                                      className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
                     </div>
                 <div className="flex items-baseline justify-between">
                     <button type="submit" 
                     className="px-6 py-2 mt-3 text-white font-semibold w-full 
-                    bg-slate-600 rounded-3xl hover:bg-stone-500"
+                    bg-slate-600 rounded-md hover:bg-stone-500"
                     onClick={() => closeModal()}>Crear Tarea</button>
                 </div>
             </div>
