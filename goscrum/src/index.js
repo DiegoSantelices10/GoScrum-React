@@ -11,7 +11,7 @@ import { store } from './store/store'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename="GoScrum-React/">
+    <BrowserRouter basename="GoScrum-React/#/">
       <Provider store={store}>
         <App  />
       </Provider>    
