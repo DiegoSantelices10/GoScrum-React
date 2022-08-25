@@ -31,7 +31,7 @@ function App() {
       <SkeletonTheme baseColor="#14142B" highlightColor="#444">
       <Routes >
         <Route
-          path="/"
+          path="GoScrum-React/"
           element={
             <RequireAuth>
               <motion.div
@@ -48,7 +48,7 @@ function App() {
         />
         <Route
           index
-          path="login"
+          path="GoScrum-React/login"
           element={
             <motion.div
               className="page"
@@ -77,7 +77,7 @@ function App() {
           />
          <Route
           index
-          path="register"
+          path="GoScrum-React/register"
           element={
             <motion.div
               className="page"
