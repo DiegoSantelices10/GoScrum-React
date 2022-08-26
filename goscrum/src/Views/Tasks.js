@@ -142,9 +142,9 @@ export default function Tasks() {
       />
       <Header />
       <div className="md:flex md:p-4 md:pt-8 md:gap-x-4" >
-        <div className="px-4 py-5 md:px-0  w-full md:w-1/5 md:h-full">
+        <div className="px-4 mt-6 md:mt-16 md:px-0  w-full md:w-1/5 md:h-full">
             <button onClick={handleOpen}
-              className="w-full md:w-full  px-6 py-2 text-white font-semibold bg-slate-700 rounded-lg hover:bg-slate-600">
+              className="w-full md:w-full  px-6 py-2 text-white font-semibold bg-cyan-700 rounded-lg hover:bg-cyan-600">
               Tarea Nueva
             </button>
         </div>

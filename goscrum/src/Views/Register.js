@@ -67,7 +67,7 @@ export default function Register() {
             teamID,
             role: values.role,
             continent: values.continent,
-            region: values.region
+            region: values.region,
           }
         })
       })
@@ -102,7 +102,7 @@ export default function Register() {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.userName}
-                className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
+                className="w-full p-2 px-3 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
               {errors.userName && touched.userName && <span className="text-sm text-white">{errors.userName}</span>}
             </div>
             <div className="mt-2">
@@ -112,7 +112,7 @@ export default function Register() {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.password}
-                className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
+                className="w-full p-2 px-3 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
               {errors.password && touched.password && <span className="text-sm text-white">{errors.password}</span>}
             </div>
             <div className="mt-2">
@@ -122,21 +122,21 @@ export default function Register() {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.email}
-                className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
+                className="w-full p-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
               {errors.email && touched.email && <span className="text-sm text-white">{errors.email}</span>}
             </div>
            
             <FormControlLabel
                 control={<Switch
-                          value={values.teamID}
-                          onChange={() => setFieldValue("switch", !values.teamID)}
+                          value={values.switch}
+                          onChange={() => setFieldValue("switch", !values.switch)}
                           name="switch"
                           color="primary"/>} 
 
                           label="Perteneces a un equipo creado?"
                           className="px-2 pt-2 text-sm  text-white" />
                           
-                       {values.switch &&  
+                       {!values.switch &&  
                               ( <div>
                                     <input id="teamID"
                                     type="text"
@@ -144,17 +144,17 @@ export default function Register() {
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     value={values.teamID}
-                                    className="w-full px-4 py-2 mb-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
+                                    className="w-full p-2 px-3 my-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white"/>
                               </div>)
                         }  
 
             
-            <div >
+            <div className="mt-2 p-2 bg-slate-500 rounded-md">
               <select id="role"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.role}
-                className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white">
+                className="w-full  border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white">
                 <option value="">Selecciona un Rol</option>
                 {data?.Rol?.map( option =>  (<option key={option} value={option}> {option} </option>) )}
               </select>
@@ -163,12 +163,12 @@ export default function Register() {
  
 
 
-            <div className="mt-4">
+            <div className="mt-4 p-2 bg-slate-500 rounded-md">
               <select id="continent"
                 onBlur={handleBlur}
                 onChange={e => handleChangeContinent(e.currentTarget.value)}
                 value={values.continent}
-                className="w-full px-4 py-2 mt-2 border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white">
+                className="w-full  border-none rounded-md bg-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-white">
                 <option value="">Selecciona un Continente</option>
                 {data?.continente?.map( option =>  ( <option key={option} value={option} > {option} </option> ) )}
                
@@ -190,13 +190,13 @@ export default function Register() {
             )}
               <div className="flex items-center justify-beetwen gap-2 pt-8">
                             <div className="w-1/2 text-center font-semibold text-sm 
-                                            text-white hover:bg-blue-600 hover:rounded-lg px-6 py-2 ">
+                                            text-white hover:bg-cyan-500 hover:rounded-lg px-6 py-2 ">
                                 <Link to="/login">Ya tienes cuenta</Link>
                             </div>
                             <div className="w-1/2">
                                 <button type="submit" 
                                         className="w-full px-6 py-2 text-white font-semibold 
-                                                 bg-blue-600 rounded-lg hover:bg-blue-900">Registrate</button>
+                                                 bg-cyan-600 rounded-lg hover:bg-cyan-500">Registrate</button>
                             </div>
                         </div>
             

@@ -83,13 +83,13 @@ export default function Login() {
 
                         <div className="flex items-center justify-beetwen gap-2 pt-8">
                             <div className="w-1/2 text-center font-semibold 
-                                             text-white hover:bg-blue-600 hover:rounded-lg px-6 py-2 ">
+                                             text-white hover:bg-cyan-500 hover:rounded-lg px-6 py-2 ">
                                 <Link to="/register">Registrate</Link>
                             </div>
                             <div className="w-1/2">
                                 <button type="submit" 
                                         className="w-full px-6 py-2 text-white font-semibold 
-                                                 bg-blue-600 rounded-lg hover:bg-blue-900">Login</button>
+                                                 bg-cyan-600 rounded-lg hover:bg-cyan-500">Login</button>
                             </div>
                         </div>
 

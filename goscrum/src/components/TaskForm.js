@@ -58,7 +58,7 @@ useEffect( () => {
 
 
   return (
-    <div className=" p-4 pt-5 md:h-auto rounded-md  text-center bg-slate-900 md:bg-slate-800  ">
+    <div className="p-8 md:h-auto rounded-md  text-center bg-slate-900 md:bg-slate-800  ">
         <h2 className='font-bold text-2xl text-white'>Crea una Tarea</h2>
         <div className="flex md:items-center justify-center  w-full  h-full">
         <form onSubmit={handleSubmit} className="w-full h-full">
@@ -112,7 +112,7 @@ useEffect( () => {
                 <div className="flex items-baseline justify-between">
                     <button type="submit" 
                     className="px-6 py-2 mt-3 text-white font-semibold w-full 
-                    bg-slate-600 rounded-md hover:bg-stone-500"
+                    bg-cyan-700 rounded-md hover:bg-cyan-600"
                     onClick={() => closeModal()}>Crear Tarea</button>
                 </div>
             </div>
