@@ -47,7 +47,7 @@ export default function Register() {
       role: "",
       continent: "",
       region: "",
-      switch: false,
+      switch: true,
     }, validationSchema, 
 
     onSubmit: async () => {
@@ -136,7 +136,7 @@ export default function Register() {
                           label="Perteneces a un equipo creado?"
                           className="px-2 pt-2 text-sm  text-white" />
                           
-                       {!values.switch &&  
+                       {values.switch &&  
                               ( <div>
                                     <input id="teamID"
                                     type="text"

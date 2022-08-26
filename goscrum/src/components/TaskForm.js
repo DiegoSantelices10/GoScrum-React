@@ -58,7 +58,7 @@ useEffect( () => {
 
 
   return (
-    <div className="p-8 md:h-auto rounded-md  text-center bg-slate-900 md:bg-slate-800  ">
+    <div className="p-8 md:h-auto   text-center bg-slate-900 md:bg-slate-800  ">
         <h2 className='font-bold text-2xl text-white'>Crea una Tarea</h2>
         <div className="flex md:items-center justify-center  w-full  h-full">
         <form onSubmit={handleSubmit} className="w-full h-full">
