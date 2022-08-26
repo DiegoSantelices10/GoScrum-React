@@ -47,7 +47,7 @@ export default function Register() {
       role: "",
       continent: "",
       region: "",
-      switch: true,
+      switch: false,
     }, validationSchema, 
 
     onSubmit: async () => {
