@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/GoScrum-React/static/css/main.fef3acce.css",
-    "main.js": "/GoScrum-React/static/js/main.9ecaa5f7.js",
+    "main.js": "/GoScrum-React/static/js/main.1b06619d.js",
     "index.html": "/GoScrum-React/index.html",
     "main.fef3acce.css.map": "/GoScrum-React/static/css/main.fef3acce.css.map",
-    "main.9ecaa5f7.js.map": "/GoScrum-React/static/js/main.9ecaa5f7.js.map"
+    "main.1b06619d.js.map": "/GoScrum-React/static/js/main.1b06619d.js.map"
   },
   "entrypoints": [
     "static/css/main.fef3acce.css",
-    "static/js/main.9ecaa5f7.js"
+    "static/js/main.1b06619d.js"
   ]
 }
